@@ -4,6 +4,7 @@
 
 import FeatureMotionWrapper from "@/app/_components/FramerMotion/FeatureMotionWrapperMap";
 import { useAuthContext } from "@/app/provider";
+import { Button } from "@/components/ui/button";
 
 import { CircleDollarSign } from "lucide-react";
 import React, { useState } from "react";
