@@ -191,24 +191,78 @@ const videoData = {
     images: ['https://images.pexels.com/photos/269583/pexels-photo-269583.jpeg?auto=compress&cs=tinysrgb&w=600'],
 }
 
+
+
 export const RemotionRoot = () => {
     return (
         <>
             <Composition
                 id="youtubeShort"
                 component={RemotionComposition}
-                durationInFrames={Number((videoData?.captionJson?.[videoData?.captionJson?.length - 1]?.end * 30).toFixed(0))}
+                durationInFrames={(inputProps) => inputProps.videoData?.durationInFrames || 360} // ✅ Read from inputProps
                 fps={30}
                 width={720}
                 height={1280}
                 defaultProps={{
-                    videoData: videoData
+                    videoData: videoData,
                 }}
-
             />
         </>
     );
 };
+
+
+
+
+// export const RemotionRoot = () => {
+//     // Make the calculation explicit and log it
+//     const lastCaptionEnd = videoData?.captionJson?.[videoData?.captionJson?.length - 1]?.end || 0;
+//     const fps = 30;
+//     const calculatedDuration = Math.ceil(lastCaptionEnd * fps);
+
+
+//     console.log("🚀🚗🏠💻 RemotionRoot - Calculated Video Duration:", {
+//         lastCaptionEnd,
+//         fps,
+//         calculatedDuration
+//     });
+
+//     return (
+//         <>
+//             <Composition
+//                 id="youtubeShort"
+//                 component={RemotionComposition}
+//                 durationInFrames={calculatedDuration}
+//                 fps={fps}
+//                 width={720}
+//                 height={1280}
+//                 defaultProps={{
+//                     videoData: videoData
+//                 }}
+//             />
+//         </>
+//     );
+// };
+
+
+// export const RemotionRoot = () => {
+//     return (
+//         <>
+//             <Composition
+//                 id="youtubeShort"
+//                 component={RemotionComposition}
+//                 durationInFrames={Number((videoData?.captionJson?.[videoData?.captionJson?.length - 1]?.end * 30).toFixed(0))}
+//                 fps={30}
+//                 width={720}
+//                 height={1280}
+//                 defaultProps={{
+//                     videoData: videoData
+//                 }}
+
+//             />
+//         </>
+//     );
+// };
 
 
 // import React from 'react';

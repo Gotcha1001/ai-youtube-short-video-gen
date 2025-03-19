@@ -137,14 +137,23 @@ export const GenerateVideoData = inngest.createFunction(
     });
 
     const RenderVideo = await step.run("renderVideo", async () => {
-      //Render Video
-
+      // Get available Remotion Cloud Run services
       const services = await getServices({
         region: "us-east1",
         compatibleOnly: true,
       });
 
       const serviceName = services[0].serviceName;
+
+      // Ensure `durationInFrames` is calculated properly
+      const lastCaptionEnd =
+        GenerateCaptions?.[GenerateCaptions.length - 1]?.end || 0;
+      const fps = 30;
+      const calculatedDuration =
+        Math.ceil(GenerateCaptions?.[GenerateCaptions.length - 1]?.end * 30) ||
+        360;
+
+      console.log("🔥 Exporting video with duration:", calculatedDuration); // Debugging
 
       const result = await renderMediaOnCloudrun({
         serviceName,
@@ -156,16 +165,21 @@ export const GenerateVideoData = inngest.createFunction(
             audioUrl: GenerateAudioFile,
             captionJson: GenerateCaptions,
             images: GenerateImages,
+            durationInFrames: calculatedDuration, // ✅ Ensure this is inside inputProps
           },
         },
         codec: "h264",
-        // updateRenderProgress,
+        durationInFrames: calculatedDuration, // ✅ Ensures correct video length in export
       });
 
       if (result.type === "success") {
-        console.log(result.bucketName);
-        console.log(result.renderId);
+        console.log("✅ Video Rendered Successfully!");
+        console.log("📦 Storage Bucket:", result.bucketName);
+        console.log("🎞 Render ID:", result.renderId);
+      } else {
+        console.error("❌ Video Render Failed:", result);
       }
+
       return result?.publicUrl;
     });
 

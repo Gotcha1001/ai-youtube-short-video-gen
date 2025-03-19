@@ -1,7 +1,25 @@
+// {
+//   "compilerOptions": {
+//     "paths": {
+//       "@/*": ["./*"]
+//     }
+//   }
+// }
+
+
 {
   "compilerOptions": {
+    "target": "esnext", // Ensures modern JS features work
+    "module": "esnext", // Supports modern module imports
+    "allowJs": true, // Allows JavaScript files
+    "checkJs": false, // Prevents unnecessary TypeScript-style errors
+    "jsx": "preserve", // Keeps JSX as it is
+    "baseUrl": ".", // Root directory for resolving paths
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"], // Short alias for the root folder
+      "@app/*": ["./app/*"] // Alias for the app folder
     }
-  }
+  },
+  "include": ["**/*.js", "**/*.jsx"], // Ensures only JavaScript files are considered
+  "exclude": ["node_modules"]
 }

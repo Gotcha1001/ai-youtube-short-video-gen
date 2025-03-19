@@ -1,11 +1,11 @@
 // app/billing/page.tsx or wherever your billing component is
 "use client";
 
-import FeatureMotionWrapper from "@/app/_components/FramerMotion/FeatureMotionWrapperMap";
+
 import { useAuthContext } from "@/app/provider";
-import { Button } from "@/components/ui/button";
+
 import { CircleDollarSign } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "sonner";
 
 const creditsPlan = [
