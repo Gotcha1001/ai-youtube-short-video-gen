@@ -1,7 +1,7 @@
 // app/api/webhook/route.ts
 import { NextResponse } from "next/server";
 import crypto from "crypto";
-import { ConvexHttpClient } from "convex/server";
+import { ConvexHttpClient } from "convex/browser";
 import { api } from "@/convex/_generated/api";
 
 function validateITNSignature(data, receivedSignature) {

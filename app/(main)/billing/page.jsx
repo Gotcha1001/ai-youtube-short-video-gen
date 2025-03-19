@@ -8,7 +8,7 @@ import { CircleDollarSign } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export const creditsPlan = [
+const creditsPlan = [
     { credits: 10, cost: 10 },
     { credits: 50, cost: 50 },
     { credits: 100, cost: 100 },

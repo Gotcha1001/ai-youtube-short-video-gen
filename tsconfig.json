@@ -1,3 +1,32 @@
+// {
+//   "compilerOptions": {
+//     "lib": ["dom", "dom.iterable", "esnext"],
+//     "allowJs": true,
+//     "skipLibCheck": true,
+//     "strict": false,
+//     "noEmit": true,
+//     "incremental": true,
+//     "module": "esnext",
+//     "esModuleInterop": true,
+//     "moduleResolution": "node",
+//     "resolveJsonModule": true,
+//     "isolatedModules": true,
+//     "jsx": "preserve",
+//     "plugins": [
+//       {
+//         "name": "next"
+//       }
+//     ],
+//     "baseUrl": ".", // Add this
+//     "paths": {
+//       // Add this
+//       "@/*": ["./*"]
+//     }
+//   },
+//   "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
+//   "exclude": ["node_modules"]
+// }
+
 {
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -17,10 +46,10 @@
         "name": "next"
       }
     ],
-    "baseUrl": ".", // Add this
+    "baseUrl": ".", // This ensures relative paths from the root work
     "paths": {
-      // Add this
-      "@/*": ["./*"]
+      "@/*": ["./*"], // This is the alias setup to point to the root folder
+      "@app/*": ["./app/*"] // If you specifically want to access 'app' folder with @app alias
     }
   },
   "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
