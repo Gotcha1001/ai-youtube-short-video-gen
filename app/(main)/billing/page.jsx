@@ -2,6 +2,7 @@
 "use client";
 
 
+import FeatureMotionWrapper from "@/app/_components/FramerMotion/FeatureMotionWrapperMap";
 import { useAuthContext } from "@/app/provider";
 
 import { CircleDollarSign } from "lucide-react";
