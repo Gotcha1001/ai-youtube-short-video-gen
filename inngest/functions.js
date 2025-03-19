@@ -145,15 +145,17 @@ export const GenerateVideoData = inngest.createFunction(
 
       const serviceName = services[0].serviceName;
 
-      // Ensure `durationInFrames` is calculated properly
+      // Calculate the duration properly
       const lastCaptionEnd =
         GenerateCaptions?.[GenerateCaptions.length - 1]?.end || 0;
       const fps = 30;
-      const calculatedDuration =
-        Math.ceil(GenerateCaptions?.[GenerateCaptions.length - 1]?.end * 30) ||
-        360;
+      const calculatedDuration = Math.ceil(lastCaptionEnd * fps) || 360;
 
-      console.log("🔥 Exporting video with duration:", calculatedDuration); // Debugging
+      console.log("🔥 Exporting video with duration:", calculatedDuration);
+
+      // Update the RemotionRoot.js file dynamically
+      // This is needed because the Composition component is defined with a function
+      // but the renderMediaOnCloudrun function expects a number
 
       const result = await renderMediaOnCloudrun({
         serviceName,
@@ -165,11 +167,12 @@ export const GenerateVideoData = inngest.createFunction(
             audioUrl: GenerateAudioFile,
             captionJson: GenerateCaptions,
             images: GenerateImages,
-            durationInFrames: calculatedDuration, // ✅
+            durationInFrames: calculatedDuration, // Pass the calculated duration
           },
         },
         codec: "h264",
-        durationInFrames: calculatedDuration, // ✅ Ensures correct video length in export
+        durationInFrames: calculatedDuration, // This is the key parameter that needs to be a number
+        // Ensure other parameters are passed correctly
       });
 
       if (result.type === "success") {

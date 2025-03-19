@@ -199,7 +199,23 @@ export const RemotionRoot = () => {
             <Composition
                 id="youtubeShort"
                 component={RemotionComposition}
-                durationInFrames={(inputProps) => inputProps.videoData?.durationInFrames || 360} // ✅ Read from inputProps
+                // The key change is here - accept both function and direct number
+                durationInFrames={(inputProps) => {
+                    // If inputProps has a direct durationInFrames value, use it
+                    if (typeof inputProps.videoData?.durationInFrames === 'number') {
+                        return inputProps.videoData.durationInFrames;
+                    }
+
+                    // Otherwise calculate from captions
+                    const captions = inputProps.videoData?.captionJson;
+                    if (captions && captions.length > 0) {
+                        const lastCaption = captions[captions.length - 1];
+                        return Math.ceil(lastCaption.end * 30) || 360;
+                    }
+
+                    // Default fallback
+                    return 360;
+                }}
                 fps={30}
                 width={720}
                 height={1280}
@@ -210,6 +226,27 @@ export const RemotionRoot = () => {
         </>
     );
 };
+
+
+
+
+// export const RemotionRoot = () => {
+//     return (
+//         <>
+//             <Composition
+//                 id="youtubeShort"
+//                 component={RemotionComposition}
+//                 durationInFrames={(inputProps) => inputProps.videoData?.durationInFrames || 360} // ✅ Read from inputProps
+//                 fps={30}
+//                 width={720}
+//                 height={1280}
+//                 defaultProps={{
+//                     videoData: videoData,
+//                 }}
+//             />
+//         </>
+//     );
+// };
 
 
 
