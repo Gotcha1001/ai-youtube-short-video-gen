@@ -165,7 +165,7 @@ export const GenerateVideoData = inngest.createFunction(
             audioUrl: GenerateAudioFile,
             captionJson: GenerateCaptions,
             images: GenerateImages,
-            durationInFrames: calculatedDuration, // ✅ Ensure this is inside inputProps
+            durationInFrames: calculatedDuration, // ✅
           },
         },
         codec: "h264",
