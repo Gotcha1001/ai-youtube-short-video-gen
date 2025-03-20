@@ -221,7 +221,7 @@ function ExploreVideoList() {
     const [loading, setLoading] = useState(true)
     const [page, setPage] = useState(0)
     const [totalVideos, setTotalVideos] = useState(0)
-    const pageSize = 10 // Number of videos per page
+    const pageSize = 5 // Number of videos per page
     const convex = useConvex()
     const router = useRouter()
 
