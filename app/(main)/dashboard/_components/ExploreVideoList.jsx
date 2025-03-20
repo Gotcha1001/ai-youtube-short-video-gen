@@ -32,19 +32,20 @@ function ExploreVideoList() {
     }, [page])
 
     const fetchVideos = async () => {
-        setLoading(true)
+        setLoading(true);
         try {
             const result = await convex.query(api.videoData.GetAllVideos, {
                 skip: page * pageSize,
                 limit: pageSize
-            })
+            });
 
-            setVideoList(result.videos)
-            setTotalVideos(result.total)
+            console.log("Fetched videos:", result);
+            setVideoList(result.videos);
+            setTotalVideos(result.total);
         } catch (error) {
-            console.error("Error fetching videos:", error)
+            console.error("Error fetching videos:", error);
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     }
 

@@ -92,7 +92,6 @@ export const GetVideoById = query({
 
 export const GetAllVideos = query({
   args: {
-    // Pagination parameters
     skip: v.optional(v.number()),
     limit: v.optional(v.number()),
   },
@@ -101,10 +100,10 @@ export const GetAllVideos = query({
     const skip = args.skip ?? 0;
     const limit = args.limit ?? 10;
 
+    // Query all videos without filtering by status
     const result = await ctx.db
       .query("videoData")
-      .filter((q) => q.eq(q.field("status"), "completed")) // Only fetch completed videos
-      .order("desc")
+      .order("desc", (q) => q.field("_creationTime")) // Sort by creation time
       .skip(skip)
       .take(limit)
       .collect();
@@ -112,7 +111,6 @@ export const GetAllVideos = query({
     // Get total count for pagination
     const totalCount = await ctx.db
       .query("videoData")
-      .filter((q) => q.eq(q.field("status"), "completed"))
       .collect()
       .then((results) => results.length);
 
