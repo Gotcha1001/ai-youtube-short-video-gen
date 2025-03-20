@@ -36,7 +36,7 @@ export async function POST(req) {
   const { topic } = await req.json();
 
   // Define the prompt inside the function to use the received topic
-  const SCRIPT_PROMPT = `Write two different scripts for a 21-second video on the Topic: ${topic}. 
+  const SCRIPT_PROMPT = `Write two different scripts for a 35-second video on the Topic: ${topic}. 
 Provide the response strictly in JSON format with the following structure:
 
 {
