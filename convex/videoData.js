@@ -87,3 +87,38 @@ export const GetVideoById = query({
     return result;
   },
 });
+
+// Add this to your videoData.js file in Convex
+
+export const GetAllVideos = query({
+  args: {
+    // Pagination parameters
+    skip: v.optional(v.number()),
+    limit: v.optional(v.number()),
+  },
+  handler: async (ctx, args) => {
+    // Default values if not provided
+    const skip = args.skip ?? 0;
+    const limit = args.limit ?? 10;
+
+    const result = await ctx.db
+      .query("videoData")
+      .filter((q) => q.eq(q.field("status"), "completed")) // Only fetch completed videos
+      .order("desc")
+      .skip(skip)
+      .take(limit)
+      .collect();
+
+    // Get total count for pagination
+    const totalCount = await ctx.db
+      .query("videoData")
+      .filter((q) => q.eq(q.field("status"), "completed"))
+      .collect()
+      .then((results) => results.length);
+
+    return {
+      videos: result,
+      total: totalCount,
+    };
+  },
+});
