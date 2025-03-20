@@ -30,7 +30,7 @@ const faqs = [
 
 function FAQSection() {
     return (
-        <section className="py-20 px-5 bg-gradient-to-r from-indigo-500 via-teal-500 to-black">
+        <section className="py-20 px-5 bg-gradient-to-r from-yellow-300 via-red-500 to-black">
             <div className="container mx-auto">
                 <MotionWrapperDelay
                     initial="hidden"
