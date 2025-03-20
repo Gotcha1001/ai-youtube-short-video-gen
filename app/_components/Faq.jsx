@@ -30,7 +30,7 @@ const faqs = [
 
 function FAQSection() {
     return (
-        <section className="py-20 px-5 gradient-background2">
+        <section className="py-20 px-5 bg-gradient-to-r from-indigo-500 via-teal-500 to-black">
             <div className="container mx-auto">
                 <MotionWrapperDelay
                     initial="hidden"
@@ -42,7 +42,7 @@ function FAQSection() {
                         visible: { opacity: 1, y: 0 },
                     }}
                 >
-                    <h3 className="text-3xl font-bold mb-12 text-center">
+                    <h3 className="text-5xl gradient-title font-bold mb-12 text-center">
                         Frequently Asked Questions
                     </h3>
                 </MotionWrapperDelay>
@@ -61,7 +61,7 @@ function FAQSection() {
                             }}
                         >
                             <AccordionItem className="mb-4 border rounded-lg overflow-hidden" value={`item-${index}`}>
-                                <AccordionTrigger className="px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all">
+                                <AccordionTrigger className="px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-300 transition-all">
                                     {faq.question}
                                 </AccordionTrigger>
                                 <AccordionContent className="px-4 py-3">
