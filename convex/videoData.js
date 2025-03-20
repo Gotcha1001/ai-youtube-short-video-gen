@@ -91,36 +91,37 @@ export const GetVideoById = query({
 // Add this to your videoData.js file in Convex
 
 // Add this to your videoData.js file in Convex
+// Add this to your videoData.js file in Convex
 export const GetAllVideos = query({
   args: {
-    // Pagination parameters
     skip: v.optional(v.number()),
     limit: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
-    // Default values if not provided
-    const skip = args.skip ?? 0;
-    const limit = args.limit ?? 10;
+    try {
+      // Use default values if not provided
+      const skip = args.skip ?? 0;
+      const limit = args.limit ?? 10;
 
-    // Get the query for completed videos
-    const videosQuery = ctx.db
-      .query("videoData")
-      .filter((q) => q.eq(q.field("status"), "completed"))
-      .order("desc");
+      // Simple query without filters first to test
+      const allVideos = await ctx.db.query("videoData").collect();
 
-    // Execute the query with pagination
-    const result = await videosQuery.skip(skip).take(limit).collect();
+      // Manual pagination in memory (not ideal for large datasets but good for testing)
+      const paginatedVideos = allVideos.slice(skip, skip + limit);
 
-    // Get total count for pagination - using the same filter
-    const totalQuery = ctx.db
-      .query("videoData")
-      .filter((q) => q.eq(q.field("status"), "completed"));
-
-    const totalCount = await totalQuery.collect();
-
-    return {
-      videos: result,
-      total: totalCount.length,
-    };
+      return {
+        videos: paginatedVideos,
+        total: allVideos.length,
+      };
+    } catch (error) {
+      // Log the error to help with debugging
+      console.error("GetAllVideos error:", error);
+      // Return an empty result rather than throwing
+      return {
+        videos: [],
+        total: 0,
+        error: error.message,
+      };
+    }
   },
 });
