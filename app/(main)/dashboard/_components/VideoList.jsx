@@ -17,7 +17,7 @@ function VideoList() {
     const [videoList, setVideoList] = useState([])
     const [loading, setLoading] = useState(true)
     const [pageIndex, setPageIndex] = useState(0)
-    const pageSize = 10 // Number of videos per page
+    const pageSize = 5 // Number of videos per page
 
     const convex = useConvex()
     const { user } = useAuthContext()
