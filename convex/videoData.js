@@ -90,8 +90,10 @@ export const GetVideoById = query({
 
 // Add this to your videoData.js file in Convex
 
+// Add this to your videoData.js file in Convex
 export const GetAllVideos = query({
   args: {
+    // Pagination parameters
     skip: v.optional(v.number()),
     limit: v.optional(v.number()),
   },
@@ -100,23 +102,25 @@ export const GetAllVideos = query({
     const skip = args.skip ?? 0;
     const limit = args.limit ?? 10;
 
-    // Query all videos without filtering by status
-    const result = await ctx.db
+    // Get the query for completed videos
+    const videosQuery = ctx.db
       .query("videoData")
-      .order("desc", (q) => q.field("_creationTime")) // Sort by creation time
-      .skip(skip)
-      .take(limit)
-      .collect();
+      .filter((q) => q.eq(q.field("status"), "completed"))
+      .order("desc");
 
-    // Get total count for pagination
-    const totalCount = await ctx.db
+    // Execute the query with pagination
+    const result = await videosQuery.skip(skip).take(limit).collect();
+
+    // Get total count for pagination - using the same filter
+    const totalQuery = ctx.db
       .query("videoData")
-      .collect()
-      .then((results) => results.length);
+      .filter((q) => q.eq(q.field("status"), "completed"));
+
+    const totalCount = await totalQuery.collect();
 
     return {
       videos: result,
-      total: totalCount,
+      total: totalCount.length,
     };
   },
 });
