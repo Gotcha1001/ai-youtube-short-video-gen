@@ -3,6 +3,7 @@ import React from "react";
 import Header from "./_components/Header";
 import Hero from "./_components/Hero";
 import SmokeEffect from "./_components/FramerMotion/SmokeEffect";
+import FAQSection from "./_components/Faq";
 
 
 function Home() {
@@ -18,6 +19,7 @@ function Home() {
 
       {/* Hero Section */}
       <Hero />
+      <FAQSection />
     </div>
   );
 }
